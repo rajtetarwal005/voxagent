@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+langchain
+langgraph
+langchain-groq
+tavily-python
+wikipedia
+python-dotenv
+pydantic
+requests
+
+# Voice
+openai-whisper
+elevenlabs
+
+# Frontend (optional if separate)
+streamlit
