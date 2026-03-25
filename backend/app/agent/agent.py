@@ -3,6 +3,8 @@ from langchain.agents import create_agent
 
 from app.config import settings
 from app.tools.calculator import calculator
+from app.tools.weather import get_weather
+from app.tools.search import search
 
 
 def get_llm():
@@ -15,20 +17,21 @@ def get_llm():
 
 def get_agent():
     llm = get_llm()
-    
-    tools = [calculator]   # 👈 attach tool here
-    
+
+    tools = [calculator, get_weather, search]
+
     agent = create_agent(llm, tools)
-    
+
     return agent
 
 
-# test agent
 if __name__ == "__main__":
     agent = get_agent()
 
+    query = input("Ask something: ")
+
     response = agent.invoke({
-        "messages": [("user", "What is 5 * 10 + 3?")]
+        "messages": [("user", query)]
     })
 
-    print(response)
+    print("\nFinal Answer:\n", response["messages"][-1].content)

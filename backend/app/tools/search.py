@@ -1,4 +1,4 @@
-from langchain.tools import TavilySearchResults
+from langchain_community.tools.tavily_search import TavilySearchResults
 from app.config import settings
 import os
 
