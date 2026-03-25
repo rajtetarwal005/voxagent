@@ -1,17 +1,17 @@
 fastapi
 uvicorn
 langchain
-langgraph
+langchain-community
+langchain-core
 langchain-groq
-tavily-python
-wikipedia
+langchain-tavily
+requests
 python-dotenv
 pydantic
-requests
 
 # Voice
-openai-whisper
-elevenlabs
+# openai-whisper
+# elevenlabs
 
 # Frontend (optional if separate)
-streamlit
+# streamlit
