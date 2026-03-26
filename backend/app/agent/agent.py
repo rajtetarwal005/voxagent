@@ -1,8 +1,8 @@
 from langchain_groq import ChatGroq
 from langchain.agents import create_agent
 from langgraph.checkpoint.memory import MemorySaver
-from app.services.whisper_service import speech_to_text
-from app.services.tts_service import text_to_speech
+# from app.services.whisper_service import speech_to_text
+# from app.services.tts_service import text_to_speech
 
 from app.config import settings
 from app.tools.calculator import calculator
@@ -56,38 +56,10 @@ def get_agent():
     tools = [calculator, get_weather, search]
 
     agent = create_agent(
-    llm,
+    llm,    
     tools,
     system_prompt=system_prompt,
     checkpointer=memory
     )
 
     return agent
-
-
-if __name__ == "__main__":
-    agent = get_agent()
-
-    print("🎤 VoxAgent Voice Mode (say 'exit' to stop)\n")
-
-    while True:
-        query = speech_to_text()
-
-        if "exit" in query.lower():
-            print("Goodbye 👋")
-            break
-
-        response = agent.invoke(
-            {
-                "messages": [("user", query)]
-            },
-            config={
-                "configurable": {"thread_id": "1"}
-            }
-        )
-
-        final_answer = response["messages"][-1].content
-
-        print("\n🤖 Answer:\n", final_answer)
-
-        text_to_speech(final_answer)

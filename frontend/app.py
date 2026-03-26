@@ -9,8 +9,11 @@ st.set_page_config(page_title="VoxAgent", page_icon="🎤")
 
 st.title("🎤 VoxAgent - Voice AI Assistant")
 
-# load whisper locally (for browser audio)
-model = whisper.load_model("base", device="cpu")
+# model = whisper.load_model("base", device="cpu")
+# 🔥 IMPORTANT: use tiny model for deployment
+model = whisper.load_model("tiny", device="cpu")
+
+BACKEND_URL = "https://your-render-url.onrender.com/chat"
 
 st.write("Click below and speak")
 
@@ -24,18 +27,22 @@ if audio_bytes:
         f.write(audio_bytes)
         audio_path = f.name
 
-    # convert speech → text
+    # speech → text
     result = model.transcribe(audio_path)
     text = result["text"]
 
     st.write(f"📝 You said: {text}")
 
-    # send to FastAPI
-    response = requests.post(
-        "http://127.0.0.1:8000/chat",
-        json={"message": text}
-    )
+    try:
+        response = requests.post(
+            BACKEND_URL,
+            json={"message": text},
+            timeout=30
+        )
 
-    answer = response.json()["response"]
+        answer = response.json()["response"]
 
-    st.success(answer)
+        st.success(answer)
+
+    except Exception as e:
+        st.error(f"Backend error: {e}")
