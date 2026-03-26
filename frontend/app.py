@@ -13,7 +13,7 @@ st.title("🎤 VoxAgent - Voice AI Assistant")
 # 🔥 IMPORTANT: use tiny model for deployment
 model = whisper.load_model("tiny", device="cpu")
 
-BACKEND_URL = "https://your-render-url.onrender.com/chat"
+BACKEND_URL = "https://voxagent.onrender.com/chat"
 
 st.write("Click below and speak")
 
